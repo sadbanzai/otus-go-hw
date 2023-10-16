@@ -26,7 +26,7 @@ func Unpack(s string) (string, error) {
 			}
 			if val == 0 {
 				str := result.String()
-				str = str[:len(str)-1]
+				str = strings.TrimSuffix(str, string(lastRune))
 				result.Reset()
 				result.WriteString(str)
 			} else {
