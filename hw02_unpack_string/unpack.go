@@ -7,8 +7,10 @@ import (
 	"unicode"
 )
 
-var ErrInvalidString = errors.New("invalid string")
-var ErrCannotConvertToInt = errors.New("cannot convert to int")
+var (
+	ErrCannotConvertToInt = errors.New("cannot convert to int")
+	ErrInvalidString      = errors.New("invalid string")
+)
 
 func Unpack(s string) (string, error) {
 	var result strings.Builder
