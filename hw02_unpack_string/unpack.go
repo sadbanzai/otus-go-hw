@@ -14,11 +14,10 @@ func Unpack(s string) (string, error) {
 	var result strings.Builder
 	var lastRune rune
 	for i, currentRune := range s {
-		if unicode.IsDigit(currentRune) && i == 0 {
+		if (i == 0 || unicode.IsDigit(lastRune)) && unicode.IsDigit(currentRune) {
 			return "", ErrInvalidString
-		} else if unicode.IsDigit(currentRune) && unicode.IsDigit(lastRune) {
-			return "", ErrInvalidString
-		} else if unicode.IsDigit(currentRune) {
+		}
+		if unicode.IsDigit(currentRune) {
 			val, err := strconv.Atoi(string(currentRune))
 			if err != nil {
 				return "", ErrCannotConvertToInt
