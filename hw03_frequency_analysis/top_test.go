@@ -50,8 +50,8 @@ func TestTop10(t *testing.T) {
 
 	t.Run("top10 test", func(t *testing.T) {
 		expected := []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
-		text = "1 2 3 4 5 6 7 8 9 0 a b c d"
-		require.Equal(t, expected, Top10(text))
+		someText := "1 2 3 4 5 6 7 8 9 0 a b c d"
+		require.Equal(t, expected, Top10(someText))
 	})
 
 	t.Run("simple test", func(t *testing.T) {
@@ -64,8 +64,8 @@ func TestTop10(t *testing.T) {
 			"dog,two", // 1
 			"man",     // 1
 		}
-		text = "cat and dog, one dog,two cats and one man"
-		require.Equal(t, expected, Top10(text))
+		someText := "cat and dog, one dog,two cats and one man"
+		require.Equal(t, expected, Top10(someText))
 	})
 
 	t.Run("positive test", func(t *testing.T) {
