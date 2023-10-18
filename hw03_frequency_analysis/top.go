@@ -15,7 +15,7 @@ func Top10(s string) []string {
 		Key   string
 		Value int
 	}
-	var pairs []pair
+	pairs := make([]pair, 0, len(count))
 	for key, val := range count {
 		pairs = append(pairs, pair{key, val})
 	}
@@ -25,7 +25,7 @@ func Top10(s string) []string {
 		}
 		return pairs[i].Key < pairs[j].Key
 	})
-	var result []string
+	result := make([]string, 0, len(pairs))
 	for _, val := range pairs {
 		result = append(result, val.Key)
 	}
