@@ -5,6 +5,8 @@ import (
 	"strings"
 )
 
+const top = 10
+
 func Top10(s string) []string {
 	splited := strings.Fields(s)
 	count := map[string]int{}
@@ -25,12 +27,15 @@ func Top10(s string) []string {
 		}
 		return pairs[i].Key < pairs[j].Key
 	})
-	result := make([]string, 0, len(pairs))
-	for _, val := range pairs {
-		result = append(result, val.Key)
-	}
-	if len(result) >= 10 {
-		return result[:10]
+	result := make([]string, 0, top)
+	if len(pairs) >= top {
+		for _, val := range pairs[:top] {
+			result = append(result, val.Key)
+		}
+	} else {
+		for _, val := range pairs {
+			result = append(result, val.Key)
+		}
 	}
 	return result
 }
