@@ -20,7 +20,8 @@ type Item struct {
 }
 
 func (c *lruCache) Set(key Key, value interface{}) bool {
-	if itemFromCache, ok := c.items[key]; ok == true {
+	itemFromCache, exists := c.items[key]
+	if exists {
 		c.queue.MoveToFront(itemFromCache)
 		itemFromCache.Value.(*Item).Value = value
 		return true
@@ -40,13 +41,12 @@ func (c *lruCache) Set(key Key, value interface{}) bool {
 }
 
 func (c *lruCache) Get(key Key) (interface{}, bool) {
-	itemFromCache, ok := c.items[key]
-	if ok == true {
+	itemFromCache, exists := c.items[key]
+	if exists {
 		c.queue.MoveToFront(itemFromCache)
 		return itemFromCache.Value.(*Item).Value, true
-	} else {
-		return nil, false
 	}
+	return nil, false
 }
 
 func (c *lruCache) Clear() {
