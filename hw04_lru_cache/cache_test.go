@@ -49,8 +49,53 @@ func TestCache(t *testing.T) {
 		require.Nil(t, val)
 	})
 
-	t.Run("purge logic", func(t *testing.T) {
-		// Write me
+	t.Run("purge logic capacity", func(t *testing.T) {
+		c := NewCache(3)
+
+		wasInCache := c.Set("aaa", 100)
+		require.False(t, wasInCache)
+		wasInCache = c.Set("bbb", 200)
+		require.False(t, wasInCache)
+		wasInCache = c.Set("ccc", 300)
+		require.False(t, wasInCache)
+		wasInCache = c.Set("ddd", 400)
+		require.False(t, wasInCache)
+
+		// "aaa" should not exist, first added
+		_, ok := c.Get("aaa")
+		require.False(t, ok)
+	})
+
+	t.Run("purge logic lru", func(t *testing.T) {
+		c := NewCache(3)
+
+		wasInCache := c.Set("aaa", 100)
+		require.False(t, wasInCache)
+		wasInCache = c.Set("bbb", 200)
+		require.False(t, wasInCache)
+		wasInCache = c.Set("ccc", 300)
+		require.False(t, wasInCache)
+
+		_, ok := c.Get("bbb")
+		require.True(t, ok)
+		wasInCache = c.Set("bbb", 1000)
+		require.True(t, wasInCache)
+		for i := 0; i < 10; i++ {
+			_, ok = c.Get("aaa")
+			require.True(t, ok)
+			if i%2 == 0 {
+				_, ok = c.Get("ccc")
+				require.True(t, ok)
+			}
+		}
+		wasInCache = c.Set("aaa", 500)
+		require.True(t, wasInCache)
+		wasInCache = c.Set("ddd", 400)
+		require.False(t, wasInCache)
+
+		// "ccc" should not exist, least recently used
+		_, ok = c.Get("ccc")
+		require.False(t, ok)
 	})
 }
 
