@@ -3,14 +3,9 @@ package main
 import (
 	"bufio"
 	"bytes"
-	"errors"
 	"os"
 	"path/filepath"
 	"strings"
-)
-
-var (
-	ErrTooLongLine = errors.New("too long line")
 )
 
 type Environment map[string]EnvValue
@@ -51,7 +46,7 @@ func ReadDir(dir string) (Environment, error) {
 		if err != nil {
 			return nil, err
 		}
-		line = bytes.Replace(line, []byte("\x00"), []byte("\n"), -1)
+		line = bytes.ReplaceAll(line, []byte("\x00"), []byte("\n"))
 		line = bytes.TrimRight(line, " \t")
 		envs[info.Name()] = EnvValue{string(line), false}
 	}

@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestRunCmd(t *testing.T) {
@@ -12,7 +13,10 @@ func TestRunCmd(t *testing.T) {
 	})
 
 	t.Run("exit code with env", func(t *testing.T) {
-		exitCode := RunCmd([]string{"sh", "-c", "exit $EXITCODE"}, Environment{"EXITCODE": EnvValue{Value: "2", NeedRemove: false}})
+		env := Environment{
+			"EXITCODE": EnvValue{Value: "2", NeedRemove: false},
+		}
+		exitCode := RunCmd([]string{"sh", "-c", "exit $EXITCODE"}, env)
 		require.Equal(t, 2, exitCode)
 	})
 

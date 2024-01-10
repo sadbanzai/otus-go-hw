@@ -5,10 +5,7 @@ import (
 	"os/exec"
 )
 
-var (
-	// UnknownErrorExitCode returns when cannot run child
-	UnknownErrorExitCode = 111
-)
+var UnknownErrorExitCode = 111
 
 // RunCmd runs a command + arguments (cmd) with environment variables from env.
 func RunCmd(cmd []string, env Environment) (returnCode int) {
