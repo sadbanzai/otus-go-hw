@@ -35,7 +35,7 @@ func RunCmd(cmd []string, env Environment) (returnCode int) {
 		if errors.As(err, &exitError) {
 			return exitError.ExitCode()
 		}
-		return 1
+		return UnknownErrorExitCode
 	}
 	return 0
 }
