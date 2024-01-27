@@ -1,0 +1,15 @@
+goos: linux
+goarch: amd64
+pkg: github.com/sadbanzai/otus-go-hw/hw10_program_optimization
+cpu: 12th Gen Intel(R) Core(TM) i5-12450H
+                 │   old.txt    │               new.txt               │
+                 │    sec/op    │   sec/op     vs base                │
+GetDomainStat-12   84.646m ± 2%   4.741m ± 5%  -94.40% (p=0.000 n=10)
+
+                 │      old.txt      │                new.txt                │
+                 │       B/op        │     B/op      vs base                 │
+GetDomainStat-12   132856.827Ki ± 0%   5.789Ki ± 0%  -100.00% (p=0.000 n=10)
+
+                 │     old.txt     │               new.txt               │
+                 │    allocs/op    │ allocs/op   vs base                 │
+GetDomainStat-12   1700081.00 ± 0%   41.00 ± 0%  -100.00% (p=0.000 n=10)

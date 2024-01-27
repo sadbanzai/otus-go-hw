@@ -1,13 +1,16 @@
 package hw10programoptimization
 
 import (
-	"encoding/json"
+	"bufio"
+	"errors"
 	"fmt"
 	"io"
-	"regexp"
 	"strings"
 )
 
+var ErrCannotUnmarshalJSON = errors.New("cannot unmarshal json")
+
+//easyjson:json
 type User struct {
 	ID       int
 	Name     string
@@ -31,18 +34,22 @@ func GetDomainStat(r io.Reader, domain string) (DomainStat, error) {
 type users [100_000]User
 
 func getUsers(r io.Reader) (result users, err error) {
-	content, err := io.ReadAll(r)
-	if err != nil {
-		return
-	}
+	br := bufio.NewReader(r)
+	var user User
+	i := 0
+	for {
+		line, _, readErr := br.ReadLine()
 
-	lines := strings.Split(string(content), "\n")
-	for i, line := range lines {
-		var user User
-		if err = json.Unmarshal([]byte(line), &user); err != nil {
-			return
+		if readErr == io.EOF {
+			break
 		}
+
+		if err = user.UnmarshalJSON(line); err != nil {
+			return result, ErrCannotUnmarshalJSON
+		}
+
 		result[i] = user
+		i++
 	}
 	return
 }
@@ -51,15 +58,11 @@ func countDomains(u users, domain string) (DomainStat, error) {
 	result := make(DomainStat)
 
 	for _, user := range u {
-		matched, err := regexp.Match("\\."+domain, []byte(user.Email))
-		if err != nil {
-			return nil, err
-		}
+		matched := strings.Contains(user.Email, "."+domain)
 
 		if matched {
-			num := result[strings.ToLower(strings.SplitN(user.Email, "@", 2)[1])]
-			num++
-			result[strings.ToLower(strings.SplitN(user.Email, "@", 2)[1])] = num
+			subDomain := strings.ToLower(strings.SplitN(user.Email, "@", 2)[1])
+			result[subDomain]++
 		}
 	}
 	return result, nil
