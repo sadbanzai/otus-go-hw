@@ -1,0 +1,16 @@
+goos: linux
+goarch: amd64
+pkg: github.com/sadbanzai/otus-go-hw/hw10_program_optimization
+cpu: 12th Gen Intel(R) Core(TM) i5-12450H
+BenchmarkGetDomainStat-12    	      13	  84548445 ns/op	136045661 B/op	 1700081 allocs/op
+BenchmarkGetDomainStat-12    	      12	  84744145 ns/op	136045357 B/op	 1700081 allocs/op
+BenchmarkGetDomainStat-12    	      13	  85000460 ns/op	136045395 B/op	 1700081 allocs/op
+BenchmarkGetDomainStat-12    	      13	  84276010 ns/op	136045395 B/op	 1700081 allocs/op
+BenchmarkGetDomainStat-12    	      13	  82801576 ns/op	136045355 B/op	 1700081 allocs/op
+BenchmarkGetDomainStat-12    	      13	  83017496 ns/op	136045372 B/op	 1700081 allocs/op
+BenchmarkGetDomainStat-12    	      13	  84747221 ns/op	136045350 B/op	 1700080 allocs/op
+BenchmarkGetDomainStat-12    	      12	  86877965 ns/op	136045398 B/op	 1700081 allocs/op
+BenchmarkGetDomainStat-12    	      13	  84863428 ns/op	136045424 B/op	 1700081 allocs/op
+BenchmarkGetDomainStat-12    	      13	  84192834 ns/op	136045386 B/op	 1700081 allocs/op
+PASS
+ok  	github.com/sadbanzai/otus-go-hw/hw10_program_optimization	15.388s
