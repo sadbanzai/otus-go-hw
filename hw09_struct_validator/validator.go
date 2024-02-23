@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"reflect"
 	"regexp"
-	"slices"
 	"strconv"
 	"strings"
 )
@@ -135,9 +134,21 @@ func In(v interface{}, param string) error {
 			}
 			insInt = append(insInt, inInt)
 		}
-		invalid = !slices.Contains(insInt, st.Int())
+		found := false
+		for _, v := range insInt {
+			if v == st.Int() {
+				found = true
+			}
+		}
+		invalid = !found
 	case reflect.String:
-		invalid = !slices.Contains(ins, st.String())
+		found := false
+		for _, v := range ins {
+			if v == st.String() {
+				found = true
+			}
+		}
+		invalid = !found
 	default:
 		return ErrNotImpl
 	}
